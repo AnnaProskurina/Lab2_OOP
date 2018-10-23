@@ -3,7 +3,6 @@
 
 using namespace std;
 
-// some long text here
 
 
 int main()
