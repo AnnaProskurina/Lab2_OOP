@@ -3,6 +3,9 @@
 
 class Multer
 {
+private:
+
+
 public:
 	LongInt A, B;
 	Multer();
@@ -10,3 +13,7 @@ public:
 };
 
 
+class Karatsuba : protected Multer
+{
+
+};

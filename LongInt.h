@@ -1,24 +1,29 @@
 #pragma once
 #include "Multer.h"
+#include <vector>
+#include <string>
 #include <iostream>
 
-using namespace std;
 
 class LongInt
 {
 private:
 	Multer* m;
-	int n[1000];
-	string a, b;
+	int i = 0;
+	vector <int> N;
 
 public:
-	LongInt();
+	LongInt (string a);
+
 	const LongInt operator* ()
 	{
 		//m->multiply(A, B);
 	}
 	//reload + - >> <<
 
-	LongInt getIntegers();
+	const LongInt operator<< (LongInt* A)
+	{
+	//	cout <<  ;
+	}
 };
 

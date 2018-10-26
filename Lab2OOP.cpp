@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include<iostream>
+#include "LongInt.h"
+#include "Multer.h"
+
 
 using namespace std;
 
@@ -7,7 +10,6 @@ using namespace std;
 
 int main()
 {
-	cout << "Hey!" << endl;	
     return 0;
 }
 
