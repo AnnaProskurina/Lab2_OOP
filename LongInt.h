@@ -8,22 +8,22 @@
 class LongInt
 {
 private:
-	Multer* m;
 	int i = 0;
 	vector <int> N;
+	static const long base = 10 ^ 9;
+	bool signMinusOfInt;
+	void stringToInt(const string& a);
 
 public:
-	LongInt (string a);
+	LongInt();
+	LongInt (const string& a);
 
-	const LongInt operator* ()
+	LongInt operator* ()
 	{
 		//m->multiply(A, B);
 	}
 	//reload + - >> <<
 
-	const LongInt operator<< (LongInt* A)
-	{
-	//	cout <<  ;
-	}
+	LongInt operator+ (LongInt& other);
 };
 

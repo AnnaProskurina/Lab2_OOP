@@ -11,3 +11,19 @@ LongInt::LongInt(string a)
 	N[i] = A;
 	i++;
 }
+
+LongInt::LongInt()
+{
+	N.push_back(0);
+}
+
+LongInt LongInt::operator+(LongInt & other)
+{
+	LongInt res;
+	if (other.signMinusOfInt)
+	{
+		other.signMinusOfInt = false;
+		res = this - other;
+		return res;
+	}
+}
