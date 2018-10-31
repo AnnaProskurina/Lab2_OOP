@@ -13,17 +13,28 @@ private:
 	static const long base = 10 ^ 9;
 	bool signMinusOfInt;
 	void stringToInt(const string& a);
+	void resizeN(LongInt& other, LongInt res);
+
+	/*
+	@ toBase 
+	@ removeZeroHead (if last == 0 remove)
+	*/
+
+	void normalize();
+	int elemOfN(int elem);
 
 public:
 	LongInt();
 	LongInt (const string& a);
 
-	LongInt operator* ()
-	{
-		//m->multiply(A, B);
-	}
-	//reload + - >> <<
-
+	
+	bool operator> (LongInt& other);
+	bool operator>= (LongInt& other);
+	bool operator< (LongInt& other);
+	bool operator<= (LongInt& other);
+	bool operator== (LongInt& other);
+	bool operator!= (LongInt& other);
+	LongInt operator- (LongInt& other);
 	LongInt operator+ (LongInt& other);
 };
 
