@@ -4,13 +4,43 @@
 
 using namespace std;
 
+LongInt::LongInt()
+{
+	N.push_back(0);
+}
 
+LongInt::~LongInt()
+{
+	N.clear();
+}
+
+void LongInt::stringToInt(const string & a)
+{
+	string temp = a;
+	if (temp.begin == '-')
+	{
+		signMinusOfInt = 1;
+		temp.erase(temp.begin);
+	}
+	else signMinusOfInt = 0;
+
+	for (int i = temp.size(); i > 0; i-=length)
+	{
+		//if (i < length) 
+		/*Правильный обход строки запись в вектор. Условия на і*/
+	}
+}
 
 void LongInt::resizeN(LongInt & other, LongInt res)
 {
-	if (N.size() > other.N.size) 	res.N.resize(N.size());
+	if (N.size() > other.N.size)  res.N.resize(N.size());
 	else 
 		res.N.resize(other.N.size());
+}
+
+void LongInt::removeZeroHead()
+{
+	if (N.size() > 1 && N.back() == 0) N.pop_back();
 }
 
 void LongInt::normalize()
@@ -31,10 +61,6 @@ int LongInt::elemOfN(int elem)
 	return N[elem];
 }
 
-LongInt::LongInt()
-{
-	N.push_back(0);
-}
 
 bool LongInt::operator>(LongInt & other)
 {
@@ -111,13 +137,13 @@ bool LongInt::operator==(LongInt & other)
 
 bool LongInt::operator!=(LongInt & other)
 {
-	return !(this == other);
+	return !(*this == other);
 }
 
 LongInt LongInt::operator-(LongInt & other)
 {
 	LongInt res;
-	if (other.N.empty()) { return res; }
+	if (other.N.empty()) { res = *this;  return res; }
 	if (this->N.empty() && (other.signMinusOfInt = 0)) { res = other;  res.signMinusOfInt = 1; return res; }
 	if (this->N.empty() && (other.signMinusOfInt = 1)) { res = other;  res.signMinusOfInt = 0; return res; }
 
@@ -129,8 +155,8 @@ LongInt LongInt::operator-(LongInt & other)
 	}
 
 	if (*this == other) { res.N.push_back(0); return res; }
-	resizeN(other, res);
 
+	resizeN(other, res);
 	if (*this > other)
 	{
 		res.signMinusOfInt = 0;
@@ -148,8 +174,8 @@ LongInt LongInt::operator-(LongInt & other)
 			res.N[i] = other.N[i] - N[i];
 		}
 	}
-	//removeZeroHead
-	//nornalize
+	removeZeroHead();
+	normalize();
 	return res;
 }
 
@@ -170,3 +196,11 @@ LongInt LongInt::operator+(LongInt & other)
 	//toBase
 	return res;
 }
+
+LongInt LongInt::operator*(LongInt & other)
+{
+	LongInt res;
+	//res = currentM->multiply(*this, other);
+	return res;
+}
+

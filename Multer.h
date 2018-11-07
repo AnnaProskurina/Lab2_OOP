@@ -5,15 +5,16 @@ class Multer
 {
 private:
 
-
 public:
-	LongInt A, B;
 	Multer();
-	//reload operator *
+	virtual LongInt multiply(LongInt A, LongInt B);
 };
 
 
 class Karatsuba : protected Multer
 {
+private:
 
+public:
+	LongInt multiply(LongInt A, LongInt B);
 };

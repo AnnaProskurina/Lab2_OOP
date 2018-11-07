@@ -11,20 +11,24 @@ private:
 	int i = 0;
 	vector <int> N;
 	static const long base = 10 ^ 9;
-	bool signMinusOfInt;
+	static const int length = 9;
+	bool signMinusOfInt = 0;
+	static Multer *currentM;
+
 	void stringToInt(const string& a);
 	void resizeN(LongInt& other, LongInt res);
-
-	/*
-	@ toBase 
-	@ removeZeroHead (if last == 0 remove)
-	*/
-
+	void removeZeroHead();
+	void toBase(int base1, int base2);
 	void normalize();
 	int elemOfN(int elem);
 
+	/*
+	@ setter of multiplication type
+	*/
+
 public:
 	LongInt();
+	~LongInt();
 	LongInt (const string& a);
 
 	
@@ -36,5 +40,6 @@ public:
 	bool operator!= (LongInt& other);
 	LongInt operator- (LongInt& other);
 	LongInt operator+ (LongInt& other);
+	LongInt operator* (LongInt& other);
 };
 
