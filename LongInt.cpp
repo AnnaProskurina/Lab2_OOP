@@ -17,6 +17,9 @@ LongInt::~LongInt()
 void LongInt::stringToInt(const string & a)
 {
 	string temp = a;
+	int localBase = 10;
+	int r = 0, p =0;
+
 	if (temp.begin == '-')
 	{
 		signMinusOfInt = 1;
@@ -24,11 +27,33 @@ void LongInt::stringToInt(const string & a)
 	}
 	else signMinusOfInt = 0;
 
-	for (int i = temp.size(); i > 0; i-=length)
-	{
-		//if (i < length) 
-		/*Правильный обход строки запись в вектор. Условия на і*/
-	}
+		if (temp.size() > 2)
+		{
+			p = atoi(temp.substr(0, 2).c_str());
+			int i = 1;
+
+			while( i < temp.size())
+			{
+				if (p < localBase)
+				{
+					p = p*10 + atoi(temp.substr(i, 1).c_str());
+					i++;
+				}
+				while (p >= localBase)
+				{
+					r = p%base;
+					p = p / base;
+					N.push_back(r);
+				}
+			}
+
+		}
+
+		else 
+			for (int i = temp.size(); i > 0; i--)
+			{
+				N.push_back(atoi(temp.substr(i-1, 1).c_str()));
+			}
 }
 
 void LongInt::resizeN(LongInt & other, LongInt res)
@@ -52,6 +77,7 @@ void LongInt::normalize()
 			N[i] = N[i] + base;
 			N[i + 1] --;
 		}
+
 	}
 }
 
