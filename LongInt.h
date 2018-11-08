@@ -11,7 +11,7 @@ private:
 	int i = 0;
 	vector <int> N;
 	static const long base = 10 ^ 9;
-	static const int length = 9;
+	static const int length = 10;
 	bool signMinusOfInt = 0;
 
 	void stringToInt(const string& a);
@@ -36,8 +36,9 @@ public:
 	LongInt operator- (LongInt& other);
 	LongInt operator+ (LongInt& other);
 	LongInt operator* (LongInt& other);
+	LongInt operator/ (LongInt& other);
 	friend ostream& operator << (ostream& stream, LongInt& longInt);
-	friend istream& operator >> (ostream& stream, LongInt& longInt);
+	friend istream& operator >> (istream& stream, LongInt& longInt);
 
 	bool simplicityLeman();
 

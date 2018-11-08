@@ -30,9 +30,7 @@ void LongInt::stringToInt(const string & a)
 {
 	LongInt t = *this;
 	string temp = a;
-	int localBase = 10;
-
-	if (temp.begin.c_str() == '-')
+	if (temp[0] == '-')
 	{
 		signMinusOfInt = 1;
 		temp.erase(temp.begin());
@@ -40,14 +38,9 @@ void LongInt::stringToInt(const string & a)
 	else t.signMinusOfInt = 0;
 
 
-	for (int i = 0; i < localBase; i++)
+	for (long i = temp.size()-1; i >= 0; i--)
 	{
-		if (i == localBase - 1) t.N.push_back(atoi(temp.substr(0, temp.size()).c_str()));
-		else
-		{
-			t.N.push_back(atoi(temp.end.c_str()));
-			temp.pop_back();
-		}
+			t.N.push_back(temp[i]);
 	}
 }
 
@@ -69,7 +62,7 @@ void LongInt::removeZeroHead()
 void LongInt::normalize()
 {
 	LongInt t = *this;
-	for (int i = 0; i <t.N.size() - 1; i++)
+	for (long i = 0; i <t.N.size() - 1; i++)
 	{
 		if (t.N[i] < 0)
 		{
@@ -97,7 +90,7 @@ bool LongInt::operator>(LongInt & other)
 	if (t.signMinusOfInt == 0 && other.signMinusOfInt == 0)
 	{
 		if (t.N.size() != other.N.size()) return N.size() > other.N.size();
-		for (int i = t.N.size(); i >= 0; i--)
+		for (long i = t.N.size(); i >= 0; i--)
 		{
 			if (t.elemOfN(i) != other.elemOfN(i)) return (t.elemOfN(i) > other.elemOfN(i));
 		}
@@ -107,7 +100,7 @@ bool LongInt::operator>(LongInt & other)
 		if (t.signMinusOfInt == 1 && other.signMinusOfInt == 1)
 		{
 			if (t.N.size() != other.N.size()) return t.N.size() < other.N.size();
-			for (int i = t.N.size(); i >= 0; i--)
+			for (long i = t.N.size(); i >= 0; i--)
 			{
 				if (t.elemOfN(i) != other.elemOfN(i)) return t.elemOfN(i) < other.elemOfN(i);
 			}
@@ -128,7 +121,7 @@ bool LongInt::operator<(LongInt & other)
 	if (t.signMinusOfInt == 0 && other.signMinusOfInt == 0)
 	{
 		if (t.N.size() != other.N.size()) return t.N.size() < other.N.size();
-		for (int i = t.N.size(); i >= 0; i--)
+		for (long i = t.N.size(); i >= 0; i--)
 		{
 			if (t.elemOfN(i) != other.elemOfN(i)) return t.elemOfN(i) < other.elemOfN(i);
 		}
@@ -138,7 +131,7 @@ bool LongInt::operator<(LongInt & other)
 		if (t.signMinusOfInt == 1 && other.signMinusOfInt == 1)
 		{
 			if (t.N.size() != other.N.size()) return t.N.size() > other.N.size();
-			for (int i = t.N.size(); i >= 0; i--)
+			for (long i = t.N.size(); i >= 0; i--)
 			{
 				if (t.elemOfN(i) != other.elemOfN(i)) return t.elemOfN(i) > other.elemOfN(i);
 			}
@@ -156,7 +149,7 @@ bool LongInt::operator==(LongInt & other)
 	if (t.signMinusOfInt != other.signMinusOfInt) return false;
 	if (t.N.size() != other.N.size()) return false;
 
-	for (int i = 0; i < N.size(); i++)
+	for (long i = 0; i < N.size(); i++)
 	{
 		if (t.N[i] != other.N[i]) return false;
 	}
@@ -190,7 +183,7 @@ LongInt LongInt::operator-(LongInt & other)
 	if (t > other)
 	{
 		res.signMinusOfInt = 0;
-		for (int i = 0; i < t.N.size(); i++)
+		for (long i = 0; i < t.N.size(); i++)
 		{
 			res.N[i] = t.N[i] - other.N[i];
 		}
@@ -220,7 +213,7 @@ LongInt LongInt::operator+(LongInt & other)
 		return res;
 	}
 	resizeN(other, res);
-	for (int i = 0; i <t.N.size(); i++)
+	for (long i = 0; i <t.N.size(); i++)
 	{
 		res.N[i] = t.N[i] + other.N[i];
 	}
@@ -229,15 +222,50 @@ LongInt LongInt::operator+(LongInt & other)
 
 LongInt LongInt::operator*(LongInt & other)
 {
-	LongInt res;
-	//res = currentM->multiply(*this, other);
+	LongInt res, t = *this;
+	if ((t.signMinusOfInt == 0 && other.signMinusOfInt) || (t.signMinusOfInt && other.signMinusOfInt == 0))
+	{
+		res.signMinusOfInt = 1;
+	}
+	if (t.N[t.N.size() - 1] == 0 || other.N[other.N.size() - 1] == 0) { return res; }
+	res.resizeN(other, res);
+	res.N.resize(res.N.size()*2);
+
+	for (long i = 0; i < t.N.size(); i++) {
+		for (long j = 0; j < other.N.size(); j++)
+			res.N[i + j] = t.N[i] * other.N[j];
+	}
+	res.normalize();
 	return res;
 }
 
 
+/*
+LongInt LongInt::operator/(LongInt & other)
+{
+	LongInt res, rem, t = *this;
+	if (t == other) 
+	{ 
+		res.N.push_back(1);
+		return res;
+	}
+
+	if (t.N[t.N.size()-1] == 0) { return res; }
+	if (other.N[other.N.size() - 1] == 0) { throw exception("Division by zero"); }
+
+	if ((t.signMinusOfInt == 0 && other.signMinusOfInt) || (t.signMinusOfInt && other.signMinusOfInt == 0))
+	{
+		res.signMinusOfInt = 1;
+	}
+
+	res.resizeN(other, res);
+
+}
+*/
+
 ostream & operator<<(ostream & stream, LongInt & longInt)
 {
-	for (int i = longInt.N.size() - 1; i >= 0; i--)
+	for (long i = longInt.N.size() - 1; i >= 0; i--)
 		stream << longInt.N[i];
 	return stream;
 }
@@ -248,9 +276,10 @@ istream & operator>>(istream & stream, LongInt & longInt)
 	string str;
 	stream >> str;
 	longInt.stringToInt(str);
+	return stream;
 }
 
-bool LongInt::simplicityLeman()
+/*bool LongInt::simplicityLeman()
 {
 
-}
+}*/

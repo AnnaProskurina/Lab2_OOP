@@ -14,7 +14,15 @@ int main()
 	cout << "Enter a long integer" << endl;
 	cin >> a;
 	LongInt A(a);
-	//cout << A << endl;
+	try
+	{
+		cout << A << endl;
+
+	}
+	catch (exception &e)
+	{
+		cout << "Error" << e.what() << endl;
+	}
 	system("pause");
     return 0;
 }
